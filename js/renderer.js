@@ -12,7 +12,8 @@ class Renderer {
 
     async loadSprites() {
         const spriteList = {
-            'mario-idle':'img/mario-idle.png','mario-walk':'img/mario-walk.png','mario-jump':'img/mario-jump.png',
+            'mario-idle':'img/mario-idle.png','mario-walk':'img/mario-walk.png','mario-jump':'img/mario-jump.png','mario-duck':'img/mario-duck.png',
+            'mario-dead':'img/mario-dead.png','mario-big-idle':'img/mario-big-idle.png','mario-big-walk':'img/mario-big-walk.png','mario-big-jump':'img/mario-big-jump.png','mario-big-duck':'img/mario-big-duck.png',
             'goomba':'img/goomba.png','coin':'img/coin.png','ground':'img/ground.png','brick':'img/brick.png',
             'stair':'img/stair.png','question':'img/question-block.png','used':'img/used-block.png','pipe':'img/pipe.png',
         };
@@ -167,28 +168,31 @@ class Renderer {
 
     getMarioSprite(player){
         if(!this.loaded)return null;
-        if(player.isSwimming)return Math.floor(this.animTimer/10)%2===0?this.sprites['mario-jump']||null:this.sprites['mario-idle']||null;
-        if(!player.onGround)return this.sprites['mario-jump']||null;
-        if(Math.abs(player.velX)>0.5)return Math.floor(this.animTimer/8)%2===0?this.sprites['mario-walk']||null:this.sprites['mario-idle']||null;
-        return this.sprites['mario-idle']||null;
+        const big=player.isBig;
+        const idle=big?this.sprites['mario-big-idle']:this.sprites['mario-idle'];
+        const walk=big?this.sprites['mario-big-walk']:this.sprites['mario-walk'];
+        const jump=big?this.sprites['mario-big-jump']:this.sprites['mario-jump'];
+        if(player.isSwimming)return Math.floor(this.animTimer/10)%2===0?jump||null:idle||null;
+        if(!player.onGround)return jump||null;
+        if(Math.abs(player.velX)>0.5)return Math.floor(this.animTimer/8)%2===0?walk||null:idle||null;
+        return idle||null;
     }
 
     drawMario(player,cameraX){
         if(player.isInvincible&&player.invincibleTimer>0&&!player.isStar&&Math.floor(player.invincibleTimer/4)%2===0)return;
         const x=player.x-cameraX,y=player.y;
-        if(!player.alive){const w=28,h=32,MR='#e52521',MS='#f8d8b0',MB='#3030e0';this.ctx.fillStyle=MR;this.ctx.fillRect(x+8,y+12,12,10);this.ctx.fillRect(x,y+4,6,10);this.ctx.fillRect(x+w-6,y+4,6,10);this.ctx.fillStyle=MS;this.ctx.fillRect(x+8,y+4,12,8);this.ctx.fillRect(x+2,y,4,6);this.ctx.fillRect(x+w-6,y,4,6);this.ctx.fillStyle='#000';this.ctx.fillRect(x+11,y+6,2,2);this.ctx.fillRect(x+15,y+6,2,2);this.ctx.fillStyle=MB;this.ctx.fillRect(x+4,y+22,8,10);this.ctx.fillRect(x+w-12,y+22,8,10);this.ctx.fillStyle=MS;this.ctx.fillRect(x+4,y+28,8,4);this.ctx.fillRect(x+w-12,y+28,8,4);return;}
+        if(!player.alive){if(this.sprites['mario-dead']){this.ctx.imageSmoothingEnabled=false;const dw=player.isBig?32:28,dh=player.isBig?48:32;this.ctx.drawImage(this.sprites['mario-dead'],x-2,y,dw,dh);this.ctx.imageSmoothingEnabled=true;}return;}
         this.ctx.save();if(!player.facingRight){const fx=player.isBig&&!player.isDucking?x+14:x+player.width/2;this.ctx.translate(fx,0);this.ctx.scale(-1,1);this.ctx.translate(-fx,0);}
         const sprite=this.getMarioSprite(player);
-        if(player.isBig&&!player.isDucking){
-            if(sprite){this.ctx.imageSmoothingEnabled=false;this.ctx.drawImage(sprite,x-7,y,42,42);this.ctx.imageSmoothingEnabled=true;}
-            else{this.ctx.fillStyle='#e52521';this.ctx.fillRect(x,y,32,32);this.ctx.fillStyle='#f8d8b0';this.ctx.fillRect(x+6,y+8,20,8);this.ctx.fillStyle='#3030e0';this.ctx.fillRect(x+5,y+32,11,6);this.ctx.fillRect(x+16,y+32,11,6);}
-        }else if(player.isDucking&&player.isBig){
-            if(this.sprites['mario-idle']){this.ctx.imageSmoothingEnabled=false;this.ctx.drawImage(this.sprites['mario-idle'],x-7,y,42,30);this.ctx.imageSmoothingEnabled=true;}
-            else{this.ctx.fillStyle='#e52521';this.ctx.fillRect(x,y,player.width,player.height);}
+        this.ctx.imageSmoothingEnabled=false;
+        if(player.isBig){
+            if(player.isDucking){const ds=this.sprites['mario-big-duck']||this.sprites['mario-big-idle'];if(ds)this.ctx.drawImage(ds,x-8,y,36,32);}
+            else{if(sprite)this.ctx.drawImage(sprite,x-8,y-16,36,54);}
         }else{
-            if(sprite){this.ctx.imageSmoothingEnabled=false;this.ctx.drawImage(sprite,x-2,y-2,CONFIG.TILE_SIZE,CONFIG.TILE_SIZE);this.ctx.imageSmoothingEnabled=true;}
-            else{this.ctx.fillStyle='#e52521';this.ctx.fillRect(x,y,player.width,player.height);this.ctx.fillStyle='#f8d8b0';this.ctx.fillRect(x+4,y+4,player.width-8,10);this.ctx.fillStyle='#3030e0';this.ctx.fillRect(x+2,y+14,player.width-4,12);}
+            if(player.isDucking){const ds=this.sprites['mario-duck']||this.sprites['mario-idle'];if(ds)this.ctx.drawImage(ds,x-2,y,28,24);}
+            else{if(sprite)this.ctx.drawImage(sprite,x-2,y,28,32);}
         }
+        this.ctx.imageSmoothingEnabled=true;
         if(player.isStar){const sc=['#ff0000','#00ff00','#0088ff','#ffff00','#ff00ff'];const ci=Math.floor(this.animTimer/4)%sc.length;this.ctx.globalCompositeOperation='source-atop';this.ctx.fillStyle=sc[ci];this.ctx.globalAlpha=0.4;this.ctx.fillRect(x-10,y-5,player.width+20,player.height+10);this.ctx.globalAlpha=1;this.ctx.globalCompositeOperation='source-over';}
         this.ctx.restore();
     }
