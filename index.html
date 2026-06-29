@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Mario World 2 - HTML5 Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="titleScreen">
+            <div class="title-blocks">
+                <span class="block brick-block"></span>
+                <span class="block question-block"></span>
+                <span class="block brick-block"></span>
+            </div>
+            <h1 class="title">SUPER MARIO</h1>
+            <h2 class="subtitle">WORLD 2</h2>
+            <div id="levelSelect">
+                <button class="level-btn" data-level="1">
+                    <span class="level-icon">🌿</span>
+                    <span class="level-name">WORLD 2-1</span>
+                    <span class="level-desc">进阶地面 · 红乌龟</span>
+                </button>
+                <button class="level-btn" data-level="2">
+                    <span class="level-icon">🌊</span>
+                    <span class="level-name">WORLD 2-2</span>
+                    <span class="level-desc">水下世界 · 游泳</span>
+                </button>
+                <button class="level-btn" data-level="3">
+                    <span class="level-icon">🌙</span>
+                    <span class="level-name">WORLD 2-3</span>
+                    <span class="level-desc">夜间平台 · 升降梯</span>
+                </button>
+                <button class="level-btn" data-level="4">
+                    <span class="level-icon">🏰</span>
+                    <span class="level-name">WORLD 2-4</span>
+                    <span class="level-desc">城堡 Boss · Bowser</span>
+                </button>
+            </div>
+            <div class="title-hint">选择关卡或按 ENTER 开始 2-1</div>
+        </div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="ui">
+            <div>SCORE: <span id="score">0</span></div>
+            <div>COINS: <span id="coins">0</span></div>
+            <div id="world">WORLD 2-1</div>
+            <div>TIME: <span id="time">400</span></div>
+            <div>LIVES: <span id="lives">3</span></div>
+            <div id="power"></div>
+        </div>
+        <div id="overlay">
+            <div id="overlayText">LEVEL CLEAR!</div>
+            <div id="subText" style="font-size: 24px; margin-top: 10px;"></div>
+            <button id="playAgainBtn" onclick="game.playAgain()" style="display:none">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <div id="controls">
+        <div>
+            <span class="key">&larr;</span> <span class="key">&rarr;</span> or <span class="key">A</span> <span class="key">D</span> - Move
+            &nbsp;|&nbsp; <span class="key">&darr;</span> or <span class="key">S</span> - Duck
+        </div>
+        <div>
+            <span class="key">SPACE</span> or <span class="key">&uarr;</span> or <span class="key">W</span> - Jump / Swim
+            &nbsp;|&nbsp; <span class="key">SHIFT</span> or <span class="key">X</span> - Fireball
+        </div>
+        <div>
+            <span class="key">R</span> - Restart | <span class="key">M</span> - Mute | <span class="key">P</span> - Pause | <span class="key">ESC</span> - Quit
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/game-state.js"></script>
+    <script src="js/mario.js"></script>
+    <script src="js/goomba.js"></script>
+    <script src="js/koopa.js"></script>
+    <script src="js/paratroopa.js"></script>
+    <script src="js/blooper.js"></script>
+    <script src="js/cheep-cheep.js"></script>
+    <script src="js/coin.js"></script>
+    <script src="js/mushroom.js"></script>
+    <script src="js/level.js"></script>
+    <script src="js/bubble-particle.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/elevator.js"></script>
+    <script src="js/piranha-plant.js"></script>
+    <script src="js/pipe-system.js"></script>
+    <script src="js/fireball.js"></script>
+    <script src="js/moving-platform.js"></script>
+    <script src="js/falling-platform.js"></script>
+    <script src="js/springboard.js"></script>
+    <script src="js/hammer-bro.js"></script>
+    <script src="js/podoboo.js"></script>
+    <script src="js/fire-bar.js"></script>
+    <script src="js/bowser.js"></script>
+    <script src="js/lift-platform.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
