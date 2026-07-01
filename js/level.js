@@ -479,7 +479,7 @@ function generateLevel2_4Map() {
     stairsDown(141, 4);
     lavaPit(145, 147);
     fill(10, 146, 10, 146, CB);
-    level[9][149] = Q;
+    level[7][150] = Q;
     level[4][148] = HIDE; // star
 
     // =====================================================
@@ -510,6 +510,7 @@ function generateLevel2_4Map() {
     // Boss room walls
     fill(2, 152, 11, 153, CB);
     fill(2, 198, 11, 199, CB);
+    fill(8, 152, 10, 153, 0);
 
     // Decorative pipes
     const pipe = (topRow, col) => {

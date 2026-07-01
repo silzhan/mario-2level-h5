@@ -162,6 +162,7 @@ class Renderer {
             case 21:this.ctx.fillStyle='#8b5e3c';this.ctx.fillRect(tx,ty,T,T);this.ctx.fillStyle='#a07050';this.ctx.fillRect(tx,ty,T,3);this.ctx.fillStyle='#6b3e1c';this.ctx.fillRect(tx,ty+T-2,T,2);this.ctx.fillStyle='#7a5030';this.ctx.fillRect(tx+10,ty+4,1,T-6);this.ctx.fillRect(tx+22,ty+4,1,T-6);this.ctx.fillStyle='#888';this.ctx.fillRect(tx+2,ty+4,2,2);this.ctx.fillRect(tx+T-4,ty+4,2,2);break;
             case 22:this.ctx.fillStyle='#666';this.ctx.fillRect(tx+8,ty+T-8,T-16,8);this.ctx.fillStyle='#888';this.ctx.fillRect(tx+10,ty+T-8,T-20,2);this.ctx.fillStyle='#8b4513';this.ctx.fillRect(tx+T/2-2,ty+4,4,T-12);this.ctx.fillStyle='#c0c0c0';this.ctx.fillRect(tx+T/2-10,ty+2,20,8);this.ctx.fillStyle='#999';this.ctx.fillRect(tx+T/2-10,ty+8,20,2);break;
             case 23:{this.ctx.fillStyle='#666';this.ctx.fillRect(tx+T/2-3,ty+T/2,6,T/2);const ff=Math.floor(this.animTimer/6)%3,fh=8+ff*2,fw=6-ff;this.ctx.fillStyle='#ff8800';this.ctx.fillRect(tx+T/2-fw/2,ty+T/2-fh,fw,fh);this.ctx.fillStyle='#ffcc00';this.ctx.fillRect(tx+T/2-1,ty+T/2-fh+2,2,fh-4);break;}
+            case 4:case 5:case 6:case 7:this.drawOverworldTile(tile,tx,ty,T,lm,r,c);break;
             case 2:case 3:case 8:this.drawOverworldTile(tile,tx,ty,T,lm,r,c);break;
         }
     }
